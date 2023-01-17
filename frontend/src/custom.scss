@@ -22,6 +22,11 @@ $theme-colors: (
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   background-image: url("./imgs/background.png");
   background-position: top;
@@ -30,6 +35,22 @@ body {
 .page {
   margin-top: 2 * $spacer;
   margin-bottom: 2 * $spacer;
+  width: 80vw;
+}
+
+.profile-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.container {
+  margin: auto;
+  position: relative;
+  width: 100%;
 }
 
 .user-pic {
@@ -57,5 +78,10 @@ body {
 }
 
 .user-info {
-  min-width: 800px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  flex-direction: column;
+  align-items: flex-end;
 }
