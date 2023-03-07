@@ -4,6 +4,7 @@ var Item = mongoose.model("Item");
 var Comment = mongoose.model("Comment");
 var User = mongoose.model("User");
 var auth = require("../auth");
+const { Configuration, OpenAIApi } = require("openai");
 const { sendEvent } = require("../../lib/event");
 
 // Preload item objects on routes with ':item'
@@ -145,8 +146,19 @@ router.post("/", auth.required, function (req, res, next) {
       }
 
       var item = new Item(req.body.item);
-      
-      if (item.image === '') item.image = await generateAiImage(item.description);
+
+      if (item.image === '') {
+        const configuration = new Configuration({
+          apiKey: process.env.OPENAI_API_KEY,
+        });
+        const openai = new OpenAIApi(configuration);
+        const response = await openai.createImage({
+          prompt: item.title,
+          n: 1,
+          size: "256x256",
+        });
+        item.image = response.data.data[0].url;
+      }
 
       item.seller = user;
 
@@ -333,19 +345,5 @@ router.delete("/:item/comments/:comment", auth.required, function (
     res.sendStatus(403);
   }
 });
-
-async function generateAiImage(description) {
-  const { Configuration, OpenAIApi } = require("openai");
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
-  const response = await openai.createImage({
-    prompt: description,
-    n: 1,
-    size: "256x256",
-  });
-  return response.data.data[0].url;
-}
 
 module.exports = router;
