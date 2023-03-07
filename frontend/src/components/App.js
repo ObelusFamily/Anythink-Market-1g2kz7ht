@@ -14,7 +14,7 @@ import Register from "./Register";
 import Settings from "./Settings";
 import { store } from "../store";
 import { push } from "react-router-redux";
-import { PrivateRoute } from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const mapStateToProps = (state) => {
   return {
