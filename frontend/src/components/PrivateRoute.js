@@ -16,6 +16,10 @@ const PrivateRoute = ({ component: Component, currentUser }) => {
       );
   }, [Component, currentUser]);
 
+  if (!currentUser) {
+    return <Redirect to="/" />;
+  }
+
   return <Route render={renderFunction} />;
 };
 
