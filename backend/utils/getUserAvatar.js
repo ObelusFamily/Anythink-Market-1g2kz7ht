@@ -30,4 +30,6 @@ function getUserAvatar(userName) {
   return canvas.toDataURL('image/png');
 }
 
-export default getUserAvatar;
+module.exports = {
+  getUserAvatar,
+}
