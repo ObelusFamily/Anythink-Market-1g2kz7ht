@@ -175,6 +175,7 @@ jobs:
       - name: Deploy
         run: |
           echo "todo: setup armory GHA"
-          clientId: ${{ secrets.ARMORY_CLIENT_ID }} 
-          clientSecret:  ${{ secrets.ARMORY_CLIENT_SECRET }} 
-          path-to-file: /armory-deploy.yml
+          kubectl -n armory-rna create secret generic rna-client-credentials --type=string \
+            --from-literal=client-secret=${{ secrets.ARMORY_CLIENT_SECRET }} \
+            --from-literal=client-id=${{ secrets.ARMORY_CLIENT_ID }} 
+          kubectl apply -f '/armory-deploy.yml'
